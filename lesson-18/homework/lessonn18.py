@@ -1,0 +1,101 @@
+import pandas as pd
+tackoverflow=pd.read_csv("tackoverflow_qa.csv")
+tackoverflow
+titanic = pd.read_csv("titanic.csv.csv")
+titanic
+#1
+tackoverflow['creationdate']=pd.to_datetime(tackoverflow['creationdate'])
+before2014=tackoverflow[tackoverflow['creationdate']<'2014-01-01']
+print(before2014)
+#2
+score50=tackoverflow[tackoverflow['score']>50]
+print(score50)
+#3
+scores=tackoverflow[tackoverflow['score'].between (50, 100)]
+print(scores)
+#4
+
+ans=tackoverflow[tackoverflow['ans_name']=='Scott Boston']
+print(ans)
+#5
+answeredcounts=tackoverflow.groupby('id')['ans_name'].nunique()
+ans5=answeredcounts[answeredcounts==5].index
+res=tackoverflow[tackoverflow['id'].isin(ans5)]
+print(res)
+
+#6
+tackoverflow['creationdate']=pd.to_datetime(tackoverflow['creationdate'])
+filt=tackoverflow[
+    (tackoverflow['creationdate']>='2014-03-01')&
+    (tackoverflow['creationdate']<='2014-10-31')&
+    (tackoverflow['ans_name']=='Unutbu')&
+    (tackoverflow['score']<5)
+]
+print(filt)
+scr=tackoverflow[
+    (tackoverflow['score'].between(5,10))&
+    (tackoverflow['viewcount']>10000)
+]
+print(scr)
+#8
+ansn=tackoverflow[tackoverflow['ans_name']!='Scott Boston']
+print(ansn)
+titanic
+#Titanic
+#1
+t=titanic[
+    (titanic['Sex'].str.lower()=='female')&
+    (titanic['Pclass']==1)&
+    (titanic['Age'].between(20,30))
+]
+print(t)
+#2
+fare=titanic[titanic['Fare']>100]
+print(fare)
+titanic
+#3
+surv=titanic[
+    (titanic['Survived']==1)&
+    (titanic['SibSp']==0)&
+    (titanic['Parch']==0)
+]
+print(surv)
+
+#4
+emb=titanic[
+    (titanic['Embarked']=='C')&
+    (titanic['Fare']>50)
+]
+print(emb)
+#5
+fam=titanic[
+    (titanic['SibSp']>0)&
+    (titanic['Parch']>0)
+]
+print(fam)
+#6
+f=titanic[
+    (titanic['Age']<=15)&
+    (titanic['Survived']!=1)
+]
+print(f)
+#7
+cabins=titanic[
+    (titanic['Cabin'].notna())&
+    (titanic['Fare']>200)
+]
+print(cabins)
+#8
+odd_passengers=titanic[titanic['PassengerId']%2==1]
+print(odd_passengers)
+#9
+tick_counts=titanic['Ticket'].value_counts()
+unique_tick=tick_counts[tick_counts==1].index
+unique_tick_pass=titanic[titanic['Ticket'].isin(unique_tick)]
+print(unique_tick_pass)
+#10
+f1=titanic[
+    (titanic['Name'].str.contains('Mrs'))&
+    (titanic['Pclass']==1)
+]
+print(f1)
